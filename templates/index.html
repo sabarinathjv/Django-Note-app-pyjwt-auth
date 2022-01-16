@@ -1,0 +1,409 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>notes site</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css'%}" rel="stylesheet" />
+        <style>
+            
+            
+            
+            .button {
+              background-color: #4CAF50;
+              border: none;
+              color: white;
+              padding: 15px 32px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 16px;
+              margin: 4px 2px;
+              cursor: pointer;
+            }
+            </style>
+    </head>
+  
+    <body>
+        
+
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    {% comment %} <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>                  
+                    </ul>               {% endcomment %}
+                    <form class="container-fluid justify-content-start">
+                        <button class="btn btn-outline-success me-2" id="logout_btn" type="button">Log out</button>                       
+                      </form>
+                </div>
+            </div>
+        </nav>
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Create your notes  !</h1>
+                </div>
+            </div>
+        </header>
+        <!-- Section-->
+
+    
+      
+
+    <blockquote class="blockquote text-center">
+        <p class="mb-0"></p>Welcome &nbsp; {{user.username}}
+      </blockquote>
+    
+
+
+        <section class="py-5">
+            
+            <div class="container">
+
+                <div id="task-container">
+                    <div id="form-wrapper">
+                        <div class="row" style="display: flex; justify-content: space-around">
+        
+                        <div><h4 id="infop"></h4></div>
+                            <div></div>
+        
+        
+        
+                        </div>
+                        <br>
+        
+        
+                        <br>
+        
+                        <form  id="form">
+                            <div class="flex-wrapper">
+        
+        
+                                <div style="flex: 6">
+                                    <input id="title" class="form-control" required type="text" name="title" placeholder="Add title">
+                                    <br>
+                                    <div class="form-group">
+                                        <textarea class="form-control" required placeholder="Add content"  id="notes" rows="3"></textarea>
+                                      </div>
+                                      <br>
+                                      <input type="file" id="my_image" required name="upload" accept=".jpg, .jpeg, .png">
+                                
+                                </div>
+                                
+                            </div>
+                            <br>
+                            <div style="flex: 1">
+                                <input id="create_button" class="btn btn-success" type="button" value="Create" >
+
+                            </div>
+                        </form>
+                    </div>
+        
+                    <div id="list-wrapper">
+                    
+                    </div>	
+                </div>
+        
+            </div>
+      
+        </section> 
+
+        <blockquote class="blockquote text-center">
+            <p class="mb-0"></p>Notes
+          </blockquote>
+
+          <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {%  for  i in results %}
+                    <div class="col mb-5">                   
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src={{i.image}} alt="No image to display" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h4 class="fw-bolder">{{i.title}}</h4>
+                                    <br>
+                                    <h6 class="fw-bolder"> {{i.notes}}</h6>
+                                    <br>
+                                    <h6 class="fw-bolder">created-on :&nbsp;{{i.created_on}}</h6>
+                                    {% if i.updated_on == None %}
+                                  
+                                    {% else %}
+                                    <h6 class="fw-bolder">last-edit-on :&nbsp;{{i.updated_on}}</h6>
+                                    {% endif %} 
+                                                         
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                <button type="button"  onclick="EDIT('{{i.id}}')" class="btn btn-success">Edit</button>
+                                <button type="button" onclick="DELETE('{{i.id}}')" class="btn btn-danger">Delete</button>
+                            </div>
+                            </div>
+                        </div>                     
+                    </div>
+                    {% endfor %}    
+
+                </div>
+            </div>
+        </section>
+
+
+        
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright @ 2022&copy; All Rights Reserved</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'js/scripts.js'%}"></script>    
+    
+ 
+
+     
+
+
+    
+
+
+
+        <script>
+
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+                   
+            var token = getCookie('csrftoken');
+            $(document).ready(function() {
+                $("#logout_btn").click(function() { 
+   
+                        fetch("{% url 'user-logout' %}", {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',"X-CSRFToken":token
+                },
+                body: JSON.stringify({
+                    "logout":"logout",
+               
+           
+                                })
+                }).then(function(res){ return res.json(); })
+                .then(function(data){          
+                    location.href = "{% url 'user-login' %}"
+
+                });
+                });
+                });
+         </script> 
+
+    
+
+
+
+
+        <script> 
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+
+            var token = getCookie('csrftoken');
+            $(document).ready(function() {
+                $("#create_button").click(function() {  
+                    var title = document.getElementById('title').value
+                    var notes = document.getElementById('notes').value
+
+                    if(title =="" ){
+                        alert("Title field empty please fill")
+                        return;        
+                    } 
+                    if(notes =="" ){
+                        alert("Notes field empty please fill")
+                        return;
+         
+                    } 
+                    var img = document.getElementById('my_image').files[0]
+
+                    var form = new FormData();
+                        form.append("title", document.getElementById('title').value );
+                        form.append("notes",  document.getElementById('notes').value );
+                        form.append("user",  {{user.id}});              
+                        if (typeof(img) != "undefined"){
+                            form.append("image",document.getElementById('my_image').files[0]);
+                        }
+                        var settings = {
+                        "url": '{% url "create" %}'+'?format=json',
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Cookie": token
+                        },
+                        "processData": false,
+                        "mimeType": "multipart/form-data",
+                        "contentType": false,
+                        "data": form
+                        
+                        };
+
+                        $.ajax(settings).done(function (response) {
+               
+                            if (jQuery.parseJSON(response).data == "True"){
+                                location.reload();
+                            }
+                            else {
+                                alert(jQuery.parseJSON(response).data)
+
+                            }
+                          
+                            
+                        
+                        });
+
+
+                               
+                });
+                });
+        
+        </script>   
+
+        <script>
+            function EDIT(event_id){
+                       
+                location.href = "{% url 'edit' 0 %}".replace(0,event_id)
+              
+              
+            }
+
+            </script>
+
+
+            <script>
+
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = cookies[i].trim();
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                function DELETE(event_id){
+
+                    if (confirm('Are you sure you want to delete the note ?')) {
+
+                        //
+                       
+
+                         
+                                   
+                            var token = getCookie('csrftoken');
+                          
+                   
+                                        fetch("{% url 'delete' 0 %}".replace(0,event_id), {
+                                method: 'delete',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json',"X-CSRFToken":token
+                                },
+                                body: JSON.stringify({
+                                    "data":"data",
+                               
+                           
+                                                })
+                                }).then(function(res){ return res.json(); })
+                                .then(function(data){          
+                                    if(data.data=="True"){
+                                        alert(data.message)
+                                     location.href = "{% url 'events' %}"
+                                    
+                                       
+                                      
+                                    }
+                                    else{
+                                        alert(data.message)        
+                                    }
+                                });
+                             
+                        
+                        //
+
+
+
+                        
+                      } else {
+                       
+                        return
+                      }
+                  
+                    
+                  
+                  
+                }
+    
+                </script>
+
+        </script>
+
+
+          
+
+            </script>
+            
+
+    </body>
+</html>

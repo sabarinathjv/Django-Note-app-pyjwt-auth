@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>note edit</title>
+	<link rel="icon" sizes="192x192" href="{% static 'images/apziva_icon.png' %}">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+	<style type="text/css">
+  .myButton {
+	
+	border-radius:28px;
+	border:1px solid #ffffff;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+      float: right;
+	font-size:17px;
+	padding:16px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+.myButton:hover {
+	
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+		body{
+		  
+		}
+
+
+		h1, h2, h3, h4, h5, p, span, strike{
+		  font-family: 'Montserrat', sans-serif;
+
+		}
+
+
+		#task-container{
+		  max-width:600px;
+		  margin:0 auto;
+		  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+		  
+		  margin-top:100px;
+		  margin-bottom:100px;
+
+		  justify-content: space-around;
+		  align-items: flex-start;
+
+		}
+
+		#form-wrapper{
+		  position: -webkit-sticky;
+		  position: sticky;
+		  top: 0rem;
+		  border-bottom: 1px solid  #e9e9e9;
+		  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+ 		  padding:40px;
+		}
+
+		#submit{
+		  border-radius: 0;
+		  border:0;
+		  color: #fff;
+		}
+
+		.flex-wrapper{
+			display: flex;
+		}
+
+		.task-wrapper{
+		  	margin:5px;
+		  	padding: 5px;
+		  	padding:20px;
+		  	cursor: pointer;
+		  	border-bottom: 1px solid  #e9e9e9;
+			}
+
+	</style>
+
+</head>
+<body>
+	<div class="container">
+
+		<div id="task-container">
+			<div id="form-wrapper">
+                <div class="row" style="display: flex; justify-content: space-around">
+
+                <div><h4 id="infop"></h4></div>
+                    <div></div>
+
+
+
+                </div>
+                <br>
+
+
+                <br>
+
+				<form id="form">
+					<div class="flex-wrapper">
+
+
+						<div style="flex: 6">
+							<input id="title" class="form-control" type="text" value ="{{results.title}}" name="title" >
+							<br>
+							<input id="notes" class="form-control" type="text" value = "{{results.notes}}" name="content" >
+							<br>
+							<input type="file" id="my_image" required name="upload" accept=".jpg, .jpeg, .png">
+						
+						</div>
+						
+					</div>
+					<br>
+					<div style="flex: 1">
+						<input id="update_button" class="btn btn-success" type="button" value="Update" >
+
+					</div>
+				</form>
+			</div>
+
+			<div id="list-wrapper">
+			
+			</div>	
+		</div>
+
+	</div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous"></script>
+
+		<script> 
+			function getCookie(name) {
+				var cookieValue = null;
+				if (document.cookie && document.cookie !== '') {
+					var cookies = document.cookie.split(';');
+					for (var i = 0; i < cookies.length; i++) {
+						var cookie = cookies[i].trim();
+						// Does this cookie string begin with the name we want?
+						if (cookie.substring(0, name.length + 1) === (name + '=')) {
+							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+	
+	
+			var token = getCookie('csrftoken');
+			$(document).ready(function() {
+				$("#update_button").click(function() {  
+					var title = document.getElementById('title').value 
+				 
+					
+					var notes = document.getElementById('notes').value  
+				 
+					var token = getCookie('csrftoken');
+					var user = {{user.id}}
+				
+				
+				
+			  var formData = new FormData();  
+			  var img = document.getElementById('my_image').files[0]
+
+			   
+			  if (typeof(img) != "undefined"){
+				formData.append("image",document.getElementById('my_image').files[0]);
+			}			  
+			  
+			  formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+			  formData.append('title', title)
+			  formData.append('notes', notes)
+			  formData.append('user', user)    
+			  console.log(formData) 
+			  var id = {{id}}     
+			  $.ajax({
+			  type: 'PUT',
+			  url: '{% url "edit" 0 %}'.replace('0',id)+'?format=json',
+			  data: formData,
+			  cache: false,
+			  processData: false,
+			  contentType: false,
+			  enctype: 'multipart/form-data',
+			  success: function (res){
+				location.href = "{% url 'events' %}"
+									   
+			  }
+			  ,
+			  error: function(res) { 
+				  alert(res.message) 
+			   
+			  } 
+		
+			})               
+				});
+				});
+		
+		</script> 
+
+	
+
+</body>
+</html>
