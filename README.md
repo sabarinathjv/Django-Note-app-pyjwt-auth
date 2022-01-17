@@ -1,6 +1,6 @@
 # Django-Note-app-pyjwt-auth
 #user registration and login with pyjwt
-#implemented crud operation in notes
+#implemented crud operation in notes with authenticated user only
 
 
 
