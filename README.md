@@ -19,7 +19,10 @@ stripe integration
 
 
 
-![Screenshot (37)](https://user-images.githubusercontent.com/44203011/149703926-55bc1375-01bd-4137-ad55-0bcd9be86698.png)
-![Screenshot (36)](https://user-images.githubusercontent.com/44203011/149703937-cfb2bcb6-ebee-4fae-841f-32c7fdbc3fd6.png)
-![Screenshot (39)](https://user-images.githubusercontent.com/44203011/149703946-9aeb1b1d-0893-4a42-985d-3addb4e3f024.png)
-![Screenshot (40)](https://user-images.githubusercontent.com/44203011/149703950-39766fed-012f-4376-bc77-222e2703fa93.png)
+![Screenshot (36)](https://user-images.githubusercontent.com/44203011/149704068-28549dcd-b6cd-4608-8f72-42e2f029265e.png)
+![Screenshot (37)](https://user-images.githubusercontent.com/44203011/149704078-00f09648-80e2-4094-9609-dc84cfc85d1a.png)
+![Screenshot (38)](https://user-images.githubusercontent.com/44203011/149704090-0901a848-b40f-429e-9b6a-bcdc4531b3e7.png)
+![Screenshot (39)](https://user-images.githubusercontent.com/44203011/149704101-679dff4b-7cf9-45f9-8ef4-bd8c1641d9e1.png)
+![Screenshot (40)](https://user-images.githubusercontent.com/44203011/149704112-0bbf19ad-0f3f-4fc0-8cdd-dc68b7f6de0a.png)
+
+
