@@ -149,12 +149,12 @@ class Edit(APIView):
     def get(self, request, *args, **kwargs):
         token = request.COOKIES.get('jwt')
         if not token:
-            raise AuthenticationFailed('You are not logged in! Or Token Expired Log in again.')
+            return Response(data={"data":"True"},status=status.HTTP_202_ACCEPTED,template_name="register.html")
         try:
             payload = jwt.decode(token, "secret", algorithms=["HS256"])
 
         except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('En error!')
+            return Response(data={"data":"True"},status=status.HTTP_202_ACCEPTED,template_name="register.html")
         user = User.objects.filter(id=payload['id']).first()
 
         check = Note.objects.filter(id=kwargs.get("pk"),user=user).last() 
