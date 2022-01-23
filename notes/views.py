@@ -9,6 +9,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from django.utils import timezone
+from django.core.cache import cache
+
 
 
 
@@ -163,10 +165,18 @@ class Edit(APIView):
             notes_data = Notesserializer(notes, many=True)
             return Response(data={"results":notes_data.data,"user":user},template_name="index.html")  
 
+        rcvd_id = kwargs.get("pk")
+        if cache.get(rcvd_id):
+            notes = cache.get(rcvd_id)
+            print("hit cache")
+        else:
+            notes = Note.objects.get(id=kwargs.get("pk"))
+            cache.set(rcvd_id ,notes)
+            print("hit the db")
 
    
 
-        notes = Note.objects.get(id=kwargs.get("pk"))
+#         notes = Note.objects.get(id=kwargs.get("pk"))
         notes_data = Notesserializer(notes)
 
         return Response(data={"results":notes_data.data,"user":user,"id":notes.id},template_name="list.html")  
