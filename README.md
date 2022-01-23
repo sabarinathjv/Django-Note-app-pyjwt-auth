@@ -2,6 +2,8 @@
 > ### user registration and login with pyjwt
 
 > ### implemented crud operation in notes with authenticated user only
+
+> ### optimised with redis cache
 <br>
 
 1. **Register and Login here**
